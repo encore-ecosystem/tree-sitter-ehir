@@ -1,0 +1,40 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "ehir",
+      "camelcase": "EHIR",
+      "title": "EHIR",
+      "scope": "source.ehir",
+      "file-types": [
+        "ehir"
+      ],
+      "injection-regex": "^ehir$",
+      "class-name": "TreeSitterEhir"
+    }
+  ],
+  "metadata": {
+    "version": "0.0.1",
+    "license": "MIT",
+    "description": "Parser for EHIR",
+    "authors": [
+      {
+        "name": "Maksim Shushkevich",
+        "email": "m.e.shushkevich@yandex.com",
+        "url": "https://github.com/meshushkevich"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/meshushkevich/tree-sitter-ehir"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true,
+    "zig": false
+  }
+}
