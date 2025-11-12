@@ -10,10 +10,7 @@
 module.exports = grammar({
   name: "ehir",
   extras: ($) => [/\s+/, $.comment],
-  conflicts: ($) => [
-    [$.instruction_enum],
-    [$.instruction_tuple_like_struct, $.parameters],
-  ],
+  conflicts: ($) => [[$.block]],
   rules: {
     module: ($) =>
       repeat(
@@ -38,53 +35,67 @@ module.exports = grammar({
       ),
     instruction_c_like_struct: ($) =>
       seq(
-        optional($.visibility_modifier),
+        field("public", optional($.visibility_modifier)),
         field("name", $.identifier),
-        field("parameters", $.parameters),
+        field("generics", optional($.generic_params)),
+        "{",
+        field("body", repeat($.typed_variable)),
+        "}",
       ),
     instruction_tuple_like_struct: ($) =>
       seq(
-        optional($.visibility_modifier),
+        field("public", optional($.visibility_modifier)),
         field("name", $.identifier),
-        field("types", seq("(", commaSep($._type), ")")),
+        field("generics", optional($.generic_params)),
+        field("types", seq("(", commaSep($.type), ")")),
       ),
     instruction_unit_like_struct: ($) =>
-      seq(optional($.visibility_modifier), field("name", $.identifier)),
+      seq(
+        field("public", optional($.visibility_modifier)),
+        field("name", $.identifier),
+      ),
 
     instruction_enum: ($) =>
       seq(
-        optional($.visibility_modifier),
+        field("public", optional($.visibility_modifier)),
         "enum",
         field("name", $.identifier),
+        field("generics", optional($.generic_params)),
         field(
-          "variants",
-          repeat(
-            choice(
-              $.instruction_c_like_struct,
-              $.instruction_tuple_like_struct,
-              $.instruction_unit_like_struct,
+          "body",
+          seq(
+            "{",
+            repeat(
+              choice(
+                $.instruction_c_like_struct,
+                $.instruction_tuple_like_struct,
+                $.instruction_unit_like_struct,
+              ),
             ),
+            "}",
           ),
         ),
       ),
 
     instruction_fn: ($) =>
       seq(
-        optional($.visibility_modifier),
         "fn",
+        field("public", optional($.visibility_modifier)),
         field("name", $.identifier),
+        field("generics", optional($.generic_params)),
         field("parameters", $.parameters),
-        seq("->", field("return_type", $._type)),
-        field("body", seq("{", repeat($.block), "}")),
+        "->",
+        field("ret_type", $.type),
+        field("body", $.func_body),
       ),
 
     instruction_fdecl: ($) =>
       seq(
         "fdecl",
-        optional($.visibility_modifier),
+        field("public", optional($.visibility_modifier)),
         field("name", $.identifier),
         field("parameters", $.parameters),
-        seq("->", field("return_type", $._type)),
+        seq("->", field("return_type", $.type)),
       ),
 
     instruction_fdefi: ($) =>
@@ -94,15 +105,24 @@ module.exports = grammar({
         field("body", "{", repeat($.block), "}"),
       ),
 
-    visibility_modifier: ($) => "pub",
+    visibility_modifier: ($) => "@",
     identifier: ($) => /[-a-zA-Z$._][-a-zA-Z$._0-9]*/,
-    parameters: ($) => seq("(", commaSep($.param), optional(","), ")"),
-    _type: ($) => $.identifier,
+    parameters: ($) => seq("(", commaSep($.param), ")"),
+    type: ($) =>
+      seq(
+        field("name", $.identifier),
+        field("pointer", optional(seq("<", $.identifier, ">"))),
+        field("generic_args", optional(seq("[", commaSep($.type), "]"))),
+      ),
     block: ($) =>
-      seq(field("block_name", $.identifier), "{", repeat($.instruction), "}"),
-    param: ($) => seq($.identifier, ":", $._type),
+      seq(
+        field("block_name", $.identifier),
+        ":",
+        field("body", repeat($._instruction)),
+      ),
+    param: ($) => seq($.identifier, ":", $.type),
     comment: ($) => /;.*/,
-    instruction: ($) =>
+    _instruction: ($) =>
       choice(
         $.instruction_add,
         $.instruction_sub,
@@ -144,46 +164,46 @@ module.exports = grammar({
       ),
 
     instruction_add: ($) =>
-      seq($._assignable, "add", $.any_variable, ",", $.any_variable),
+      seq($._assignable, "add", $._any_variable, ",", $._any_variable),
     instruction_sub: ($) =>
-      seq($._assignable, "sub", $.any_variable, ",", $.any_variable),
+      seq($._assignable, "sub", $._any_variable, ",", $._any_variable),
     instruction_mul: ($) =>
-      seq($._assignable, "mul", $.any_variable, ",", $.any_variable),
+      seq($._assignable, "mul", $._any_variable, ",", $._any_variable),
     instruction_div: ($) =>
-      seq($._assignable, "div", $.any_variable, ",", $.any_variable),
+      seq($._assignable, "div", $._any_variable, ",", $._any_variable),
     instruction_rem: ($) =>
-      seq($._assignable, "rem", $.any_variable, ",", $.any_variable),
+      seq($._assignable, "rem", $._any_variable, ",", $._any_variable),
     instruction_grt: ($) =>
-      seq($._assignable, "grt", $.any_variable, ",", $.any_variable),
+      seq($._assignable, "grt", $._any_variable, ",", $._any_variable),
     instruction_geq: ($) =>
-      seq($._assignable, "geq", $.any_variable, ",", $.any_variable),
+      seq($._assignable, "geq", $._any_variable, ",", $._any_variable),
     instruction_les: ($) =>
-      seq($._assignable, "les", $.any_variable, ",", $.any_variable),
+      seq($._assignable, "les", $._any_variable, ",", $._any_variable),
     instruction_leq: ($) =>
-      seq($._assignable, "leq", $.any_variable, ",", $.any_variable),
+      seq($._assignable, "leq", $._any_variable, ",", $._any_variable),
     instruction_neq: ($) =>
-      seq($._assignable, "neq", $.any_variable, ",", $.any_variable),
+      seq($._assignable, "neq", $._any_variable, ",", $._any_variable),
     instruction_ieq: ($) =>
-      seq($._assignable, "ieq", $.any_variable, ",", $.any_variable),
+      seq($._assignable, "ieq", $._any_variable, ",", $._any_variable),
     instruction_or: ($) =>
-      seq($._assignable, "or", $.any_variable, ",", $.any_variable),
+      seq($._assignable, "or", $._any_variable, ",", $._any_variable),
     instruction_and: ($) =>
-      seq($._assignable, "and", $.any_variable, ",", $.any_variable),
+      seq($._assignable, "and", $._any_variable, ",", $._any_variable),
     instruction_lsh: ($) =>
-      seq($._assignable, "lsh", $.any_variable, ",", $.any_variable),
+      seq($._assignable, "lsh", $._any_variable, ",", $._any_variable),
     instruction_rsh: ($) =>
-      seq($._assignable, "rsh", $.any_variable, ",", $.any_variable),
+      seq($._assignable, "rsh", $._any_variable, ",", $._any_variable),
     instruction_xor: ($) =>
-      seq($._assignable, "xor", $.any_variable, ",", $.any_variable),
+      seq($._assignable, "xor", $._any_variable, ",", $._any_variable),
 
     instruction_getfieldptr: ($) =>
       seq(
         $._assignable,
         "getfieldptr",
-        $.any_variable,
-        repeat(seq("::", choice($.any_variable, /\d+/))),
+        $._any_variable,
+        repeat(seq("::", choice($._any_variable, /\d+/))),
       ),
-    instruction_getptr: ($) => seq($._assignable, "getptr", $.any_variable),
+    instruction_getptr: ($) => seq($._assignable, "getptr", $._any_variable),
 
     instruction_call: ($) =>
       seq(
@@ -191,36 +211,38 @@ module.exports = grammar({
         "call",
         field("func_name", $.identifier),
         "(",
-        commaSep($.any_variable),
+        commaSep($._any_variable),
         ")",
       ),
-    instruction_not: ($) => seq($._assignable, "not", $.any_variable),
+    instruction_not: ($) => seq($._assignable, "not", $._any_variable),
 
     instruction_capa: ($) => seq($._assignable, "capa", $.atomic),
-    instruction_caps: ($) => seq($._assignable, "caps", $.identifier),
-    insrtuction_cape: ($) => seq($._assignable, "cape", $.identifier),
+    instruction_caps: ($) =>
+      seq($._assignable, "caps", $.structure_initialization),
+    insrtuction_cape: ($) => seq($._assignable, "cape", $.enum_initialization),
     instruction_capsh: ($) => seq($._assignable, "capsh", $.identifier),
     instruction_capeh: ($) => seq($._assignable, "capeh", $.identifier),
-    instruction_store: ($) => seq("store", $.any_variable, ",", $.any_variable),
-    instruction_load: ($) => seq($._assignable, "load", $.any_variable),
+    instruction_store: ($) =>
+      seq("store", $._any_variable, ",", $._any_variable),
+    instruction_load: ($) => seq($._assignable, "load", $._any_variable),
     instruction_cast: ($) =>
-      seq($._assignable, "cast", $.any_variable, $._type),
+      seq($._assignable, "cast", $._any_variable, $.type),
 
     instruction_br: ($) => seq("br", field("label", $.identifier)),
     instruction_cbr: ($) =>
       seq(
         "cbr",
-        field("condition", $.any_variable),
+        field("condition", $._any_variable),
         ",",
         field("true_br", $.identifier),
         ",",
         field("else_br", $.identifier),
       ),
-    instruction_ret: ($) => seq("ret", field("variable", $.any_variable)),
+    instruction_ret: ($) => seq("ret", field("variable", $._any_variable)),
     instruction_switch: ($) =>
       seq(
         "switch",
-        field("variable", $.any_variable),
+        field("variable", $._any_variable),
         ",",
         field("default", $.identifier),
         "{",
@@ -230,7 +252,7 @@ module.exports = grammar({
     instruction_match: ($) =>
       seq(
         "match",
-        field("variable", $.any_variable),
+        field("variable", $._any_variable),
         ",",
         field("default", $.identifier),
         "{",
@@ -238,7 +260,7 @@ module.exports = grammar({
           seq(
             $.identifier,
             "(",
-            repeat($.any_variable),
+            repeat($._any_variable),
             ")",
             "=>",
             $.identifier,
@@ -247,14 +269,34 @@ module.exports = grammar({
         "}",
       ),
 
-    _assignable: ($) => seq($.any_variable, "="),
+    _assignable: ($) => seq(field("assign_to", $._any_variable), "="),
 
-    any_variable: ($) => choice($.typed_variable, $.untyped_variable),
-    untyped_variable: ($) => $.identifier,
-    typed_variable: ($) => seq($.untyped_variable, ":", $._type),
+    _any_variable: ($) => choice($.typed_variable, $.untyped_variable),
+    untyped_variable: ($) => field("name", $.identifier),
+    typed_variable: ($) => seq($.untyped_variable, ":", field("type", $.type)),
     atomic: ($) => choice($.isized_int, $.usized_int),
-    isized_int: ($) => /\d+_i\d+/,
-    usized_int: ($) => /\d+_u\d+/,
+    isized_int: ($) => seq($.int, /_i\d+/),
+    usized_int: ($) => seq($.int, /_u\d+/),
+    int: ($) => choice($._hex, $._oct, $._bin, $._dec),
+    _hex: ($) => /0[xX][0-9a-fA-F]+(?:_[0-9a-fA-F]+)*/,
+    _oct: ($) => /0[oO][0-7]+(?:_[0-7]+)*/,
+    _bin: ($) => /0[bB][01]+(?:_[01]+)*/,
+    _dec: ($) => /[0-9]+(?:_[0-9]+)*/,
+    generic_params: ($) => seq("[", commaSep($.identifier), "]"),
+    func_body: ($) => seq("{", repeat($.block), "}"),
+    structure_initialization: ($) =>
+      seq(
+        field("type", $.type),
+        field("args", seq("(", commaSep($._any_variable), ")")),
+      ),
+    enum_initialization: ($) =>
+      seq(
+        field("name", $.identifier),
+        field("generic_args", optional(seq("[", commaSep($.type), "]"))),
+        "::",
+        field("variant", $.identifier),
+        field("args", optional(seq("(", commaSep($._any_variable), ")"))),
+      ),
   },
 });
 
