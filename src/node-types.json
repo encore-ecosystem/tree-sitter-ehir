@@ -22,16 +22,6 @@
     "type": "block",
     "named": true,
     "fields": {
-      "block_name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
       "body": {
         "multiple": true,
         "required": false,
@@ -166,6 +156,32 @@
           },
           {
             "type": "instruction_xor",
+            "named": true
+          }
+        ]
+      },
+      "label": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "block_label",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "block_label",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
             "named": true
           }
         ]
@@ -1937,6 +1953,16 @@
     "type": "typed_variable",
     "named": true,
     "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
       "type": {
         "multiple": false,
         "required": true,
@@ -1947,16 +1973,6 @@
           }
         ]
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "untyped_variable",
-          "named": true
-        }
-      ]
     }
   },
   {
@@ -1989,6 +2005,10 @@
         }
       ]
     }
+  },
+  {
+    "type": "$",
+    "named": false
   },
   {
     "type": "(",

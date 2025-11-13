@@ -10,7 +10,7 @@
 module.exports = grammar({
   name: "ehir",
   extras: ($) => [/\s+/, $.comment],
-  conflicts: ($) => [[$.block]],
+  conflicts: ($) => [],
   rules: {
     module: ($) =>
       repeat(
@@ -115,11 +115,8 @@ module.exports = grammar({
         field("generic_args", optional(seq("[", commaSep($.type), "]"))),
       ),
     block: ($) =>
-      seq(
-        field("block_name", $.identifier),
-        ":",
-        field("body", repeat($._instruction)),
-      ),
+      seq(field("label", $.block_label), field("body", repeat($._instruction))),
+    block_label: ($) => seq("$", field("name", $.identifier), ":"),
     param: ($) => seq($.identifier, ":", $.type),
     comment: ($) => /;.*/,
     _instruction: ($) =>
@@ -273,7 +270,8 @@ module.exports = grammar({
 
     _any_variable: ($) => choice($.typed_variable, $.untyped_variable),
     untyped_variable: ($) => field("name", $.identifier),
-    typed_variable: ($) => seq($.untyped_variable, ":", field("type", $.type)),
+    typed_variable: ($) =>
+      seq(field("name", $.identifier), ":", field("type", $.type)),
     atomic: ($) => choice($.isized_int, $.usized_int),
     isized_int: ($) => seq($.int, /_i\d+/),
     usized_int: ($) => seq($.int, /_u\d+/),
