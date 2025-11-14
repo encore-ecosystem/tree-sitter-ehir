@@ -38,17 +38,19 @@ module.exports = grammar({
         field("public", optional($.visibility_modifier)),
         field("name", $.identifier),
         field("generics", optional($.generic_params)),
-        "{",
-        field("body", repeat($.typed_variable)),
-        "}",
+        field("body", $.c_like_struct_body),
       ),
+    c_like_struct_body: ($) => seq("{", repeat($.typed_variable), "}"),
+
     instruction_tuple_like_struct: ($) =>
       seq(
         field("public", optional($.visibility_modifier)),
         field("name", $.identifier),
         field("generics", optional($.generic_params)),
-        field("types", seq("(", commaSep($.type), ")")),
+        field("types", $.tuple_like_struct_types),
       ),
+    tuple_like_struct_types: ($) => seq("(", commaSep($.type), ")"),
+
     instruction_unit_like_struct: ($) =>
       seq(
         field("public", optional($.visibility_modifier)),
@@ -61,8 +63,9 @@ module.exports = grammar({
         "enum",
         field("name", $.identifier),
         field("generics", optional($.generic_params)),
-        field("body", seq("{", repeat($.enum_variant), "}")),
+        field("body", $.enum_body),
       ),
+    enum_body: ($) => seq("{", repeat($.enum_variant), "}"),
 
     instruction_fn: ($) =>
       seq(

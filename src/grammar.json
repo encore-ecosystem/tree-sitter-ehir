@@ -127,18 +127,27 @@
           }
         },
         {
+          "type": "FIELD",
+          "name": "body",
+          "content": {
+            "type": "SYMBOL",
+            "name": "c_like_struct_body"
+          }
+        }
+      ]
+    },
+    "c_like_struct_body": {
+      "type": "SEQ",
+      "members": [
+        {
           "type": "STRING",
           "value": "{"
         },
         {
-          "type": "FIELD",
-          "name": "body",
+          "type": "REPEAT",
           "content": {
-            "type": "REPEAT",
-            "content": {
-              "type": "SYMBOL",
-              "name": "typed_variable"
-            }
+            "type": "SYMBOL",
+            "name": "typed_variable"
           }
         },
         {
@@ -194,51 +203,55 @@
           "type": "FIELD",
           "name": "types",
           "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "STRING",
-                "value": "("
-              },
-              {
-                "type": "CHOICE",
-                "members": [
-                  {
+            "type": "SYMBOL",
+            "name": "tuple_like_struct_types"
+          }
+        }
+      ]
+    },
+    "tuple_like_struct_types": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "type"
+                },
+                {
+                  "type": "REPEAT",
+                  "content": {
                     "type": "SEQ",
                     "members": [
                       {
-                        "type": "SYMBOL",
-                        "name": "type"
+                        "type": "STRING",
+                        "value": ","
                       },
                       {
-                        "type": "REPEAT",
-                        "content": {
-                          "type": "SEQ",
-                          "members": [
-                            {
-                              "type": "STRING",
-                              "value": ","
-                            },
-                            {
-                              "type": "SYMBOL",
-                              "name": "type"
-                            }
-                          ]
-                        }
+                        "type": "SYMBOL",
+                        "name": "type"
                       }
                     ]
-                  },
-                  {
-                    "type": "BLANK"
                   }
-                ]
-              },
-              {
-                "type": "STRING",
-                "value": ")"
-              }
-            ]
-          }
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": ")"
         }
       ]
     },
@@ -322,25 +335,29 @@
           "type": "FIELD",
           "name": "body",
           "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "STRING",
-                "value": "{"
-              },
-              {
-                "type": "REPEAT",
-                "content": {
-                  "type": "SYMBOL",
-                  "name": "enum_variant"
-                }
-              },
-              {
-                "type": "STRING",
-                "value": "}"
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "enum_body"
           }
+        }
+      ]
+    },
+    "enum_body": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "enum_variant"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "}"
         }
       ]
     },

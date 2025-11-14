@@ -189,6 +189,36 @@
     }
   },
   {
+    "type": "c_like_struct_body",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "typed_variable",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "enum_body",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "enum_variant",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "enum_initialization",
     "named": true,
     "fields": {
@@ -434,11 +464,11 @@
     "named": true,
     "fields": {
       "body": {
-        "multiple": true,
-        "required": false,
+        "multiple": false,
+        "required": true,
         "types": [
           {
-            "type": "typed_variable",
+            "type": "c_like_struct_body",
             "named": true
           }
         ]
@@ -756,20 +786,12 @@
     "named": true,
     "fields": {
       "body": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "enum_variant",
+            "type": "enum_body",
             "named": true
-          },
-          {
-            "type": "{",
-            "named": false
-          },
-          {
-            "type": "}",
-            "named": false
           }
         ]
       },
@@ -1685,23 +1707,11 @@
         ]
       },
       "types": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "(",
-            "named": false
-          },
-          {
-            "type": ")",
-            "named": false
-          },
-          {
-            "type": ",",
-            "named": false
-          },
-          {
-            "type": "type",
+            "type": "tuple_like_struct_types",
             "named": true
           }
         ]
@@ -1913,6 +1923,21 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "tuple_like_struct_types",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "type",
+          "named": true
+        }
+      ]
     }
   },
   {
