@@ -1440,8 +1440,12 @@
           "value": "capa"
         },
         {
-          "type": "SYMBOL",
-          "name": "atomic"
+          "type": "FIELD",
+          "name": "atomic",
+          "content": {
+            "type": "SYMBOL",
+            "name": "atomic"
+          }
         }
       ]
     },

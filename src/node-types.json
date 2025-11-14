@@ -581,17 +581,17 @@
             "named": true
           }
         ]
+      },
+      "atomic": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "atomic",
+            "named": true
+          }
+        ]
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "atomic",
-          "named": true
-        }
-      ]
     }
   },
   {
