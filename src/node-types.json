@@ -641,17 +641,17 @@
             "named": true
           }
         ]
+      },
+      "init": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "structure_initialization",
+            "named": true
+          }
+        ]
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "structure_initialization",
-          "named": true
-        }
-      ]
     }
   },
   {

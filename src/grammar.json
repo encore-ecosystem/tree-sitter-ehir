@@ -1461,8 +1461,12 @@
           "value": "caps"
         },
         {
-          "type": "SYMBOL",
-          "name": "structure_initialization"
+          "type": "FIELD",
+          "name": "init",
+          "content": {
+            "type": "SYMBOL",
+            "name": "structure_initialization"
+          }
         }
       ]
     },

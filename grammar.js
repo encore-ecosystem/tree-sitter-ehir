@@ -207,7 +207,7 @@ module.exports = grammar({
     instruction_capa: ($) =>
       seq($._assignable, "capa", field("atomic", $.atomic)),
     instruction_caps: ($) =>
-      seq($._assignable, "caps", $.structure_initialization),
+      seq($._assignable, "caps", field("init", $.structure_initialization)),
     insrtuction_cape: ($) => seq($._assignable, "cape", $.enum_initialization),
     instruction_capsh: ($) => seq($._assignable, "capsh", $.identifier),
     instruction_capeh: ($) => seq($._assignable, "capeh", $.identifier),
