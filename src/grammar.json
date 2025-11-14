@@ -691,10 +691,11 @@
           "value": ":"
         },
         {
-          "type": "REPEAT",
+          "type": "FIELD",
+          "name": "body",
           "content": {
             "type": "SYMBOL",
-            "name": "_instruction"
+            "name": "block_body"
           }
         }
       ]
@@ -715,6 +716,13 @@
           }
         }
       ]
+    },
+    "block_body": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "SYMBOL",
+        "name": "_instruction"
+      }
     },
     "param": {
       "type": "SEQ",
