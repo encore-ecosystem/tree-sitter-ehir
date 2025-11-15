@@ -275,18 +275,16 @@ module.exports = grammar({
     generic_params: ($) => seq("[", commaSep($.identifier), "]"),
     func_body: ($) => seq("{", repeat($.block), "}"),
     structure_initialization: ($) =>
-      seq(
-        field("type", $.type),
-        field("args", seq("(", commaSep($._any_variable), ")")),
-      ),
+      seq(field("type", $.type), field("args", $.args)),
     enum_initialization: ($) =>
       seq(
         field("name", $.identifier),
         field("generic_args", optional(seq("[", commaSep($.type), "]"))),
         "::",
         field("variant", $.identifier),
-        field("args", optional(seq("(", commaSep($._any_variable), ")"))),
+        field("args", optional($.args)),
       ),
+    args: ($) => seq("(", commaSep($._any_variable), ")"),
     enum_variant: ($) =>
       choice(
         $.instruction_c_like_struct,

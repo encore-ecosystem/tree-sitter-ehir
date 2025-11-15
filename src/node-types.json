@@ -1,5 +1,24 @@
 [
   {
+    "type": "args",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "typed_variable",
+          "named": true
+        },
+        {
+          "type": "untyped_variable",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "atomic",
     "named": true,
     "fields": {},
@@ -238,27 +257,11 @@
     "named": true,
     "fields": {
       "args": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "(",
-            "named": false
-          },
-          {
-            "type": ")",
-            "named": false
-          },
-          {
-            "type": ",",
-            "named": false
-          },
-          {
-            "type": "typed_variable",
-            "named": true
-          },
-          {
-            "type": "untyped_variable",
+            "type": "args",
             "named": true
           }
         ]
@@ -1903,27 +1906,11 @@
     "named": true,
     "fields": {
       "args": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "(",
-            "named": false
-          },
-          {
-            "type": ")",
-            "named": false
-          },
-          {
-            "type": ",",
-            "named": false
-          },
-          {
-            "type": "typed_variable",
-            "named": true
-          },
-          {
-            "type": "untyped_variable",
+            "type": "args",
             "named": true
           }
         ]
