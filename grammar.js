@@ -208,7 +208,8 @@ module.exports = grammar({
       seq($._assignable, "capa", field("atomic", $.atomic)),
     instruction_caps: ($) =>
       seq($._assignable, "caps", field("init", $.structure_initialization)),
-    insrtuction_cape: ($) => seq($._assignable, "cape", $.enum_initialization),
+    insrtuction_cape: ($) =>
+      seq($._assignable, "cape", field("init_enum", $.enum_initialization)),
     instruction_capsh: ($) => seq($._assignable, "capsh", $.identifier),
     instruction_capeh: ($) => seq($._assignable, "capeh", $.identifier),
     instruction_store: ($) =>
@@ -245,17 +246,14 @@ module.exports = grammar({
         ",",
         field("default", $.identifier),
         "{",
-        repeat(
-          seq(
-            $.identifier,
-            "(",
-            repeat($._any_variable),
-            ")",
-            "=>",
-            $.identifier,
-          ),
-        ),
+        repeat($.match_case),
         "}",
+      ),
+    match_case: ($) =>
+      seq(
+        field("init_enum", $.enum_initialization),
+        "=>",
+        field("label", $.block_label),
       ),
 
     _assignable: ($) => seq(field("assign_to", $._any_variable), "="),

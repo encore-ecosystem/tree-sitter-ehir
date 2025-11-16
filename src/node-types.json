@@ -380,17 +380,17 @@
             "named": true
           }
         ]
+      },
+      "init_enum": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "enum_initialization",
+            "named": true
+          }
+        ]
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "enum_initialization",
-          "named": true
-        }
-      ]
     }
   },
   {
@@ -1359,15 +1359,7 @@
       "required": false,
       "types": [
         {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "typed_variable",
-          "named": true
-        },
-        {
-          "type": "untyped_variable",
+          "type": "match_case",
           "named": true
         }
       ]
@@ -1814,6 +1806,32 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "match_case",
+    "named": true,
+    "fields": {
+      "init_enum": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "enum_initialization",
+            "named": true
+          }
+        ]
+      },
+      "label": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "block_label",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
