@@ -246,7 +246,7 @@ module.exports = grammar({
         ",",
         field("default", $.identifier),
         "{",
-        repeat($.match_case),
+        field("cases", repeat($.match_case)),
         "}",
       ),
     match_case: ($) =>

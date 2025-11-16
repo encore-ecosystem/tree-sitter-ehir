@@ -1329,6 +1329,16 @@
     "type": "instruction_match",
     "named": true,
     "fields": {
+      "cases": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "match_case",
+            "named": true
+          }
+        ]
+      },
       "default": {
         "multiple": false,
         "required": true,
@@ -1353,16 +1363,6 @@
           }
         ]
       }
-    },
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "match_case",
-          "named": true
-        }
-      ]
     }
   },
   {

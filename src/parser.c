@@ -13,10 +13,10 @@
 #define ALIAS_COUNT 0
 #define TOKEN_COUNT 64
 #define EXTERNAL_TOKEN_COUNT 0
-#define FIELD_COUNT 26
+#define FIELD_COUNT 27
 #define MAX_ALIAS_SEQUENCE_LENGTH 8
 #define MAX_RESERVED_WORD_SET_SIZE 0
-#define PRODUCTION_ID_COUNT 53
+#define PRODUCTION_ID_COUNT 54
 #define SUPERTYPE_COUNT 0
 
 enum ts_symbol_identifiers {
@@ -1036,28 +1036,29 @@ enum ts_field_identifiers {
   field_assign_to = 2,
   field_atomic = 3,
   field_body = 4,
-  field_condition = 5,
-  field_default = 6,
-  field_else_br = 7,
-  field_func_name = 8,
-  field_generic_args = 9,
-  field_generics = 10,
-  field_init = 11,
-  field_init_enum = 12,
-  field_label = 13,
-  field_name = 14,
-  field_parameters = 15,
-  field_pointer = 16,
-  field_public = 17,
-  field_ret_type = 18,
-  field_return_type = 19,
-  field_source = 20,
-  field_symbol = 21,
-  field_true_br = 22,
-  field_type = 23,
-  field_types = 24,
-  field_variable = 25,
-  field_variant = 26,
+  field_cases = 5,
+  field_condition = 6,
+  field_default = 7,
+  field_else_br = 8,
+  field_func_name = 9,
+  field_generic_args = 10,
+  field_generics = 11,
+  field_init = 12,
+  field_init_enum = 13,
+  field_label = 14,
+  field_name = 15,
+  field_parameters = 16,
+  field_pointer = 17,
+  field_public = 18,
+  field_ret_type = 19,
+  field_return_type = 20,
+  field_source = 21,
+  field_symbol = 22,
+  field_true_br = 23,
+  field_type = 24,
+  field_types = 25,
+  field_variable = 26,
+  field_variant = 27,
 };
 
 static const char * const ts_field_names[] = {
@@ -1066,6 +1067,7 @@ static const char * const ts_field_names[] = {
   [field_assign_to] = "assign_to",
   [field_atomic] = "atomic",
   [field_body] = "body",
+  [field_cases] = "cases",
   [field_condition] = "condition",
   [field_default] = "default",
   [field_else_br] = "else_br",
@@ -1136,13 +1138,14 @@ static const TSMapSlice ts_field_map_slices[PRODUCTION_ID_COUNT] = {
   [43] = {.index = 128, .length = 3},
   [44] = {.index = 131, .length = 2},
   [45] = {.index = 133, .length = 3},
-  [46] = {.index = 136, .length = 4},
-  [47] = {.index = 140, .length = 2},
-  [48] = {.index = 142, .length = 5},
-  [49] = {.index = 147, .length = 5},
-  [50] = {.index = 152, .length = 6},
-  [51] = {.index = 158, .length = 6},
-  [52] = {.index = 164, .length = 7},
+  [46] = {.index = 136, .length = 3},
+  [47] = {.index = 139, .length = 4},
+  [48] = {.index = 143, .length = 2},
+  [49] = {.index = 145, .length = 5},
+  [50] = {.index = 150, .length = 5},
+  [51] = {.index = 155, .length = 6},
+  [52] = {.index = 161, .length = 6},
+  [53] = {.index = 167, .length = 7},
 };
 
 static const TSFieldMapEntry ts_field_map_entries[] = {
@@ -1328,40 +1331,44 @@ static const TSFieldMapEntry ts_field_map_entries[] = {
     {field_name, 0},
     {field_variant, 2},
   [136] =
+    {field_cases, 5},
+    {field_default, 3},
+    {field_variable, 1},
+  [139] =
     {field_generic_args, 1},
     {field_generic_args, 2},
     {field_name, 0},
     {field_variant, 4},
-  [140] =
+  [143] =
     {field_init_enum, 0},
     {field_label, 2},
-  [142] =
+  [145] =
     {field_args, 5},
     {field_generic_args, 1},
     {field_generic_args, 2},
     {field_name, 0},
     {field_variant, 4},
-  [147] =
+  [150] =
     {field_generic_args, 1},
     {field_generic_args, 2},
     {field_generic_args, 3},
     {field_name, 0},
     {field_variant, 5},
-  [152] =
+  [155] =
     {field_args, 6},
     {field_generic_args, 1},
     {field_generic_args, 2},
     {field_generic_args, 3},
     {field_name, 0},
     {field_variant, 5},
-  [158] =
+  [161] =
     {field_generic_args, 1},
     {field_generic_args, 2},
     {field_generic_args, 3},
     {field_generic_args, 4},
     {field_name, 0},
     {field_variant, 6},
-  [164] =
+  [167] =
     {field_args, 7},
     {field_generic_args, 1},
     {field_generic_args, 2},
@@ -7550,12 +7557,12 @@ static const TSParseActionEntry ts_parse_actions[] = {
   [203] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_enum_initialization, 3, 0, 42),
   [205] = {.entry = {.count = 1, .reusable = true}}, SHIFT(125),
   [207] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_enum_initialization, 3, 0, 42),
-  [209] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_enum_initialization, 5, 0, 46),
-  [211] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_enum_initialization, 5, 0, 46),
-  [213] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_enum_initialization, 6, 0, 49),
-  [215] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_enum_initialization, 6, 0, 49),
-  [217] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_enum_initialization, 7, 0, 51),
-  [219] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_enum_initialization, 7, 0, 51),
+  [209] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_enum_initialization, 5, 0, 47),
+  [211] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_enum_initialization, 5, 0, 47),
+  [213] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_enum_initialization, 6, 0, 50),
+  [215] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_enum_initialization, 6, 0, 50),
+  [217] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_enum_initialization, 7, 0, 52),
+  [219] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_enum_initialization, 7, 0, 52),
   [221] = {.entry = {.count = 1, .reusable = true}}, SHIFT(123),
   [223] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_instruction_getfieldptr, 4, 0, 36),
   [225] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_instruction_getfieldptr, 4, 0, 36),
@@ -7576,12 +7583,12 @@ static const TSParseActionEntry ts_parse_actions[] = {
   [256] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_args, 4, 0, 0),
   [258] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_args, 2, 0, 0),
   [260] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_args, 2, 0, 0),
-  [262] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_enum_initialization, 6, 0, 48),
-  [264] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_enum_initialization, 6, 0, 48),
-  [266] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_enum_initialization, 7, 0, 50),
-  [268] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_enum_initialization, 7, 0, 50),
-  [270] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_enum_initialization, 8, 0, 52),
-  [272] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_enum_initialization, 8, 0, 52),
+  [262] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_enum_initialization, 6, 0, 49),
+  [264] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_enum_initialization, 6, 0, 49),
+  [266] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_enum_initialization, 7, 0, 51),
+  [268] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_enum_initialization, 7, 0, 51),
+  [270] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_enum_initialization, 8, 0, 53),
+  [272] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_enum_initialization, 8, 0, 53),
   [274] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_typed_variable, 3, 0, 18),
   [276] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_typed_variable, 3, 0, 18),
   [278] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_instruction_getptr, 3, 0, 36),
@@ -7660,8 +7667,8 @@ static const TSParseActionEntry ts_parse_actions[] = {
   [424] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_instruction_call, 6, 0, 41),
   [426] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_instruction_switch, 7, 0, 44),
   [428] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_instruction_switch, 7, 0, 44),
-  [430] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_instruction_match, 7, 0, 44),
-  [432] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_instruction_match, 7, 0, 44),
+  [430] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_instruction_match, 7, 0, 46),
+  [432] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_instruction_match, 7, 0, 46),
   [434] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_instruction_call, 7, 0, 41),
   [436] = {.entry = {.count = 1, .reusable = false}}, REDUCE(sym_instruction_call, 7, 0, 41),
   [438] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_instruction_add, 5, 0, 36),
@@ -7840,7 +7847,7 @@ static const TSParseActionEntry ts_parse_actions[] = {
   [794] = {.entry = {.count = 1, .reusable = true}}, SHIFT(365),
   [796] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_generic_params, 3, 0, 0),
   [798] = {.entry = {.count = 1, .reusable = true}}, REDUCE(aux_sym_instruction_switch_repeat1, 3, 0, 0),
-  [800] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_match_case, 3, 0, 47),
+  [800] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_match_case, 3, 0, 48),
   [802] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_generic_params, 4, 0, 0),
   [804] = {.entry = {.count = 1, .reusable = true}}, SHIFT(20),
   [806] = {.entry = {.count = 1, .reusable = true}}, REDUCE(sym_generic_params, 2, 0, 0),

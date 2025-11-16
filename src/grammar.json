@@ -1748,10 +1748,14 @@
           "value": "{"
         },
         {
-          "type": "REPEAT",
+          "type": "FIELD",
+          "name": "cases",
           "content": {
-            "type": "SYMBOL",
-            "name": "match_case"
+            "type": "REPEAT",
+            "content": {
+              "type": "SYMBOL",
+              "name": "match_case"
+            }
           }
         },
         {
