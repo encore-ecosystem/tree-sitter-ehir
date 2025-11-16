@@ -72,10 +72,6 @@
       "required": true,
       "types": [
         {
-          "type": "insrtuction_cape",
-          "named": true
-        },
-        {
           "type": "instruction_add",
           "named": true
         },
@@ -93,6 +89,10 @@
         },
         {
           "type": "instruction_capa",
+          "named": true
+        },
+        {
+          "type": "instruction_cape",
           "named": true
         },
         {
@@ -364,36 +364,6 @@
     }
   },
   {
-    "type": "insrtuction_cape",
-    "named": true,
-    "fields": {
-      "assign_to": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "typed_variable",
-            "named": true
-          },
-          {
-            "type": "untyped_variable",
-            "named": true
-          }
-        ]
-      },
-      "init_enum": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "enum_initialization",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "instruction_add",
     "named": true,
     "fields": {
@@ -591,6 +561,36 @@
         "types": [
           {
             "type": "atomic",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "instruction_cape",
+    "named": true,
+    "fields": {
+      "assign_to": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "typed_variable",
+            "named": true
+          },
+          {
+            "type": "untyped_variable",
+            "named": true
+          }
+        ]
+      },
+      "init_enum": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "enum_initialization",
             "named": true
           }
         ]

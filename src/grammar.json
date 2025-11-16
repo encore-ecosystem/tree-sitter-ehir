@@ -846,7 +846,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "insrtuction_cape"
+          "name": "instruction_cape"
         },
         {
           "type": "SYMBOL",
@@ -1470,7 +1470,7 @@
         }
       ]
     },
-    "insrtuction_cape": {
+    "instruction_cape": {
       "type": "SEQ",
       "members": [
         {
